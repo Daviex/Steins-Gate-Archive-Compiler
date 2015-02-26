@@ -30,23 +30,27 @@ namespace Steins_Gate_Creation_Files
 
         static void Main(string[] args)
         {
-            Console.WriteLine("###################################");
-            Console.WriteLine("#      NPA Archives Compiler      #");
-            Console.WriteLine("###################################");
-            Console.WriteLine("#   Original Tool Made by Nagato  #");
-            Console.WriteLine("###################################");
-            Console.WriteLine("#     New Tool Made by Daviex     #");
-            Console.WriteLine("###################################");
-            Console.WriteLine("#   Italian Steins;Gate VN Team   #");
-            Console.WriteLine("###################################");
-            Console.WriteLine("#        Version 1.2 Alpha        #");
-            Console.WriteLine("###################################");
-            Console.WriteLine("#            CodeName:            #");
-            Console.WriteLine("###################################");
-            Console.WriteLine("#         El Psy Congroo          #");
-            Console.WriteLine("###################################");
-            Console.WriteLine();
-            Console.WriteLine("Press any key to start...");
+            Console.WriteLine(
+                @"
+                      
+                      ###################################
+                      #      NPA Archives Compiler      #
+                      ###################################
+                      #   Original Tool Made by Nagato  #
+                      ###################################
+                      #     New Tool Made by Daviex     #
+                      ###################################
+                      #   Italian Steins;Gate VN Team   #
+                      ###################################
+                      #           Version 1.5           #
+                      ###################################
+                      #            Codename:            #
+                      ###################################
+                      #         El Psy Congroo          #
+                      ###################################
+                      
+                           Press any key to start...    
+                                                         ");
             Console.ReadLine();
 
             if (args.Length == 0)
@@ -148,12 +152,9 @@ namespace Steins_Gate_Creation_Files
 
             bw.Write(headerBuffer);
             
+            //Number of Files
             headerBuffer = BitConverter.GetBytes(fileCount);
-
-            for (int j = headerArrayLen, k = 0; k < headerBuffer.Length; k++, j++)
-                header[j] = headerBuffer[k];
-
-            headerArrayLen = headerBuffer.Length;
+            HeaderBuffer(ref header, headerBuffer, ref headerArrayLen);
 
             for(int i = 0; i < fileCount; i++)
             {
@@ -162,45 +163,23 @@ namespace Steins_Gate_Creation_Files
                            
                 //Convert the file name length into bytes
                 headerBuffer = BitConverter.GetBytes(fileNameLen);
-
-                //Adding it to the header
-                for (int j = headerArrayLen, k = 0; k < headerBuffer.Length; k++, j++)
-                    header[j] = headerBuffer[k];
-
-                //Sum of the current header length + new informations
-                headerArrayLen += headerBuffer.Length;
-
+                HeaderBuffer(ref header, headerBuffer, ref headerArrayLen);
+                
                 //File Name
                 headerBuffer = Encoding.Unicode.GetBytes(entry[i].name);
-
-                for (int j = headerArrayLen, k = 0; k < headerBuffer.Length; k++, j++)
-                    header[j] = headerBuffer[k];
-
-                headerArrayLen += headerBuffer.Length;
+                HeaderBuffer(ref header, headerBuffer, ref headerArrayLen);
 
                 //File Size
                 headerBuffer = BitConverter.GetBytes(entry[i].fileSize);
-
-                for (int j = headerArrayLen, k = 0; k < headerBuffer.Length; k++, j++)
-                    header[j] = headerBuffer[k];
-
-                headerArrayLen += headerBuffer.Length;
+                HeaderBuffer(ref header, headerBuffer, ref headerArrayLen);
 
                 //Pointer
                 headerBuffer = BitConverter.GetBytes(entry[i].offset + headerLen + 4);
-
-                for (int j = headerArrayLen, k = 0; k < headerBuffer.Length; k++, j++)
-                    header[j] = headerBuffer[k];
-
-                headerArrayLen += headerBuffer.Length;
+                HeaderBuffer(ref header, headerBuffer, ref headerArrayLen);
 
                 //Unknown!
                 headerBuffer = BitConverter.GetBytes(entry[i].unk);
-
-                for (int j = headerArrayLen, k = 0; k < 4; k++, j++)
-                    header[j] = headerBuffer[k];
-
-                headerArrayLen += headerBuffer.Length;
+                HeaderBuffer(ref header, headerBuffer, ref headerArrayLen);
             }
 
             //Crypt all the first part of the header
@@ -208,6 +187,22 @@ namespace Steins_Gate_Creation_Files
 
             //Write it into the file
             bw.Write(header);
+        }
+
+        /// <summary>
+        /// This will avoid to write 5 for, just use function!
+        /// </summary>
+        /// <param name="header">Data</param>
+        /// <param name="headerBuffer">Temporary Data</param>
+        /// <param name="headerArrayLen">Length Temp Data</param>
+        static void HeaderBuffer(ref byte[] header, byte[] headerBuffer, ref int headerArrayLen)
+        {
+            //Adding it to the header
+            for (int j = headerArrayLen, k = 0; k < headerBuffer.Length; k++, j++)
+                header[j] = headerBuffer[k];
+
+            //Sum of the current header length + new informations
+            headerArrayLen += headerBuffer.Length;
         }
 
         static void WriteData(ref BinaryWriter bw)
