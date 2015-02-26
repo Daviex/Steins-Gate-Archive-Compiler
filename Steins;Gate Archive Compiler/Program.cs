@@ -43,7 +43,7 @@ namespace Steins_Gate_Creation_Files
             Console.WriteLine("###################################");
             Console.WriteLine("#            CodeName:            #");
             Console.WriteLine("###################################");
-            Console.WriteLine("#         El Psy Congrue          #");
+            Console.WriteLine("#         El Psy Congroo          #");
             Console.WriteLine("###################################");
             Console.WriteLine();
             Console.WriteLine("Press any key to start...");
