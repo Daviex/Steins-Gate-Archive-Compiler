@@ -154,7 +154,7 @@ namespace Steins_Gate_Creation_Files
             
             //Number of Files
             headerBuffer = BitConverter.GetBytes(fileCount);
-            HeaderBuffer(ref header, headerBuffer, ref headerArrayLen);
+            WriteHeaderBuffer(ref header, headerBuffer, ref headerArrayLen);
 
             for(int i = 0; i < fileCount; i++)
             {
@@ -163,23 +163,23 @@ namespace Steins_Gate_Creation_Files
                            
                 //Convert the file name length into bytes
                 headerBuffer = BitConverter.GetBytes(fileNameLen);
-                HeaderBuffer(ref header, headerBuffer, ref headerArrayLen);
+                WriteHeaderBuffer(ref header, headerBuffer, ref headerArrayLen);
                 
                 //File Name
                 headerBuffer = Encoding.Unicode.GetBytes(entry[i].name);
-                HeaderBuffer(ref header, headerBuffer, ref headerArrayLen);
+                WriteHeaderBuffer(ref header, headerBuffer, ref headerArrayLen);
 
                 //File Size
                 headerBuffer = BitConverter.GetBytes(entry[i].fileSize);
-                HeaderBuffer(ref header, headerBuffer, ref headerArrayLen);
+                WriteHeaderBuffer(ref header, headerBuffer, ref headerArrayLen);
 
                 //Pointer
                 headerBuffer = BitConverter.GetBytes(entry[i].offset + headerLen + 4);
-                HeaderBuffer(ref header, headerBuffer, ref headerArrayLen);
+                WriteHeaderBuffer(ref header, headerBuffer, ref headerArrayLen);
 
                 //Unknown!
                 headerBuffer = BitConverter.GetBytes(entry[i].unk);
-                HeaderBuffer(ref header, headerBuffer, ref headerArrayLen);
+                WriteHeaderBuffer(ref header, headerBuffer, ref headerArrayLen);
             }
 
             //Crypt all the first part of the header
@@ -195,7 +195,7 @@ namespace Steins_Gate_Creation_Files
         /// <param name="header">Data</param>
         /// <param name="headerBuffer">Temporary Data</param>
         /// <param name="headerArrayLen">Length Temp Data</param>
-        static void HeaderBuffer(ref byte[] header, byte[] headerBuffer, ref int headerArrayLen)
+        static void WriteHeaderBuffer(ref byte[] header, byte[] headerBuffer, ref int headerArrayLen)
         {
             //Adding it to the header
             for (int j = headerArrayLen, k = 0; k < headerBuffer.Length; k++, j++)
