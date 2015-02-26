@@ -131,7 +131,7 @@ namespace Steins_Gate_Creation_Files
                 entry[index].fileSize = (int)br.BaseStream.Length;
                 entry[index].unk = 0;
 
-                Console.WriteLine("[+]" + entry[index].name + "\tOffset[" + entry[index].offset.ToString("X") + "]\tSize[" + entry[index].fileSize.ToString("X") + "]");
+                Console.WriteLine("[+]{0}\tOffset[{1}]\tSize[{2}]", entry[index].name, entry[index].offset.ToString("X"), entry[index].fileSize.ToString("X"));
 
                 br.Close();
 
