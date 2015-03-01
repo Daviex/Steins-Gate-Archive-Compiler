@@ -1,4 +1,4 @@
-# Steins-Gate-Archive-Compiler
+# Steins;Gate Archive Compiler
 ___________________________________
 |      NPA Archives Compiler      |
 |---------------------------------|
