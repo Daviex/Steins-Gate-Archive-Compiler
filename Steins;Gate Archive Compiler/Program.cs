@@ -53,7 +53,7 @@ namespace Steins_Gate_Creation_Files
                                                          ");
             Console.ReadLine();
 
-            if (args.Length == 0)
+            if (args.Length != 0)
             {
                 Console.WriteLine("You should move the folder on me to works!");
                 Console.WriteLine("Press a button to close the program.");
@@ -61,7 +61,7 @@ namespace Steins_Gate_Creation_Files
                 Environment.Exit(0);
             }
 
-            string originalFolder = args[0];
+            string originalFolder = @"C:\Users\Davide\Documents\GitHub\Steins-Gate-Archive-Compiler\Steins;Gate Archive Compiler\bin\Debug\cg";
 
             #region Prints
             Console.WriteLine("I'm reading your folder...");
@@ -91,19 +91,19 @@ namespace Steins_Gate_Creation_Files
             #endregion
         }
 
-        static public void ScrambleKey(int keylen)
+        public static void ScrambleKey(int keylen)
         {
             for (int i = 0; i < keylen; i++)
                 key[i] = (byte)~key[i];
         }
 
-        static public void CryptBuffer(int keylen, ref byte[] header, int headerlen)
+        public static void CryptBuffer(int keylen, ref byte[] header, int headerlen)
         {
             for (int i = 0; i < headerlen; i++)
                 header[i] ^= key[i % keylen];
         }
 
-        static public void ReadDirectory(string path)
+        public static void ReadDirectory(string path)
         {
             int slashPos = path.LastIndexOf('\\');
 
@@ -111,13 +111,17 @@ namespace Steins_Gate_Creation_Files
 
             int curOffset = 0;
 
-            fileCount = Directory.EnumerateFiles(path).Count();
+            //New in C# 6.0: Now it require the Searchoption for Subdirectories,
+            //Or it will only looks in top directories
+            fileCount = Directory.EnumerateFiles(path, "*", SearchOption.AllDirectories).Count();
 
             entry = new NPA2ENTRY[fileCount+1];
 
             int index = 0;
 
-            foreach (string files in Directory.EnumerateFiles(path))
+            //New in C# 6.0: Now it require the Searchoption for Subdirectories,
+            //Or it will only looks in top directories
+            foreach (string files in Directory.EnumerateFiles(path, "*", SearchOption.AllDirectories))
             {
                 file = files.Substring(slashPos + 1);
                 BinaryReader br = new BinaryReader(File.OpenRead(file));
@@ -142,7 +146,7 @@ namespace Steins_Gate_Creation_Files
             }
         }
 
-        static public void WriteHeader(ref BinaryWriter bw)
+        public static void WriteHeader(ref BinaryWriter bw)
         {
             byte[] header = new byte[headerLen];
             byte[] headerBuffer;
@@ -195,7 +199,7 @@ namespace Steins_Gate_Creation_Files
         /// <param name="header">Data</param>
         /// <param name="headerBuffer">Temporary Data</param>
         /// <param name="headerArrayLen">Length Temp Data</param>
-        static void WriteHeaderBuffer(ref byte[] header, byte[] headerBuffer, ref int headerArrayLen)
+        public static void WriteHeaderBuffer(ref byte[] header, byte[] headerBuffer, ref int headerArrayLen)
         {
             //Adding it to the header
             for (int j = headerArrayLen, k = 0; k < headerBuffer.Length; k++, j++)
@@ -205,7 +209,7 @@ namespace Steins_Gate_Creation_Files
             headerArrayLen += headerBuffer.Length;
         }
 
-        static void WriteData(ref BinaryWriter bw)
+        public static void WriteData(ref BinaryWriter bw)
         {
             byte[] buffer;
 
