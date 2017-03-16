@@ -53,7 +53,7 @@ namespace Steins_Gate_Creation_Files
                                                          ");
             Console.ReadLine();
 
-            if (args.Length != 0)
+            if (args.Length == 0)
             {
                 Console.WriteLine("You should move the folder on me to works!");
                 Console.WriteLine("Press a button to close the program.");
@@ -61,7 +61,7 @@ namespace Steins_Gate_Creation_Files
                 Environment.Exit(0);
             }
 
-            string originalFolder = @"C:\Users\Davide\Documents\GitHub\Steins-Gate-Archive-Compiler\Steins;Gate Archive Compiler\bin\Debug\cg";
+            string originalFolder = args[0];
 
             #region Prints
             Console.WriteLine("I'm reading your folder...");
