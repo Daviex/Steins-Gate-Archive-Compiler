@@ -1,14 +1,12 @@
 # Steins;Gate Archive Compiler
 ___________________________________
-|      NPA Archives Compiler      |
+|       SG Archives Compiler      |
 |---------------------------------|
-|   Italian Steins;Gate VN Team   |
-|---------------------------------|
-|     New Tool Made by Daviex     |
+|          Made by Daviex         |
 |---------------------------------|
 |   Original Tool Made by Nagato  |
 |---------------------------------|
-|        Version 1.2 Alpha        |
+|           Version 2.0           |
 |---------------------------------|
 |            CodeName:            |
 |---------------------------------|
@@ -37,7 +35,13 @@ it was when I decrypted it. When it will end, will crypt everything and write it
 into the final file.
 
 # How to make it works?
-Move your folder over the executable, it will compile the NPA file.
+## Now also MPK formats!
+It will now asks for the type of file after dragging it over, and you have to choose
+    
+    - 1 for NPA
+    - 2 for MPK
+
+Move your folder over the executable, it will compile the NPA or MPK file.
 
 Enjoy
 
@@ -46,7 +50,7 @@ http://steinsgatevn.forumcommunity.net/
 
 # Copyright
 
-Copyright (c) 2015 Davide Iuffrida
+Copyright (c) 2015-2021 Davide Iuffrida
 
 License: Academic Free License ("AFL") v. 3.0
 
