@@ -1,17 +1,12 @@
 # Steins;Gate Archive Compiler
-___________________________________
+
 |       SG Archives Compiler      |
-|---------------------------------|
+| :-----------------------------: |  
 |          Made by Daviex         |
-|---------------------------------|
 |   Original Tool Made by Nagato  |
-|---------------------------------|
 |           Version 2.0           |
-|---------------------------------|
 |            CodeName:            |
-|---------------------------------|
 |         El Psy Congroo          |
-|_________________________________|
 
 This tool was re-created from the original one made by Nagato to works with Just USA edition of the game.
 
