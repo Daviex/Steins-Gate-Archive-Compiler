@@ -3,7 +3,9 @@
 // AFL License page: http://opensource.org/licenses/AFL-3.0
 
 
+using Newtonsoft.Json;
 using System;
+using System.Collections.Generic;
 using System.IO;
 using System.Linq;
 using System.Text;
@@ -251,10 +253,12 @@ namespace Steins_Gate_Creation_Files
     }
 
     public static class MPK
-    {
-      const short headerVersion = 0x02;
-      public static int fileCount = 0;
-      public static int headerSize = 0;
+    {      
+      public struct MpkMeta
+      {
+        public int index;
+        public string name;
+      }
 
       public struct MPK2ENTRY
       {
@@ -265,19 +269,31 @@ namespace Steins_Gate_Creation_Files
         public string originalPath;
       }
 
+      const short headerVersion = 0x02;
+      public static int fileCount = 0;
+      public static int headerSize = 0;
       public static MPK2ENTRY[] entries;
 
       public static void ReadDirectory(string path)
       {
+        string file = String.Empty;
         int slashPos = path.LastIndexOf('\\');
         var fileEntries = Directory.EnumerateFiles(path, "*", SearchOption.AllDirectories).ToList();
-        fileCount = fileEntries.Count();
 
-        string file = String.Empty;
+        //If there's a metadata from decompile, use it to recompile in the same order
+        var metaJson = fileEntries.Where(x => x.Contains(".json")).FirstOrDefault();
+        List<MpkMeta> metadata = null;
+        if (metaJson != null)
+        {
+          fileEntries.Remove(metaJson);
+          metadata = JsonConvert.DeserializeObject<List<MpkMeta>>(File.ReadAllText(metaJson)).OrderBy(x => x.index).ToList();
+          fileEntries = fileEntries.OrderBy(f => metadata.Where(m => m.name == f.Replace($"{path}\\", "")).FirstOrDefault().index).ToList();
+        }
 
+        fileCount = fileEntries.Count();        
         headerSize = 0x44 + (fileEntries.Count * 0x100) + 0x1BC;
-        long curOffset = headerSize;
 
+        long curOffset = headerSize;
         int index = 0;
 
         entries = new MPK2ENTRY[fileCount];
