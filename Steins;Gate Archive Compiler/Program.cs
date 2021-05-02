@@ -289,6 +289,10 @@ namespace Steins_Gate_Creation_Files
           metadata = JsonConvert.DeserializeObject<List<MpkMeta>>(File.ReadAllText(metaJson)).OrderBy(x => x.index).ToList();
           fileEntries = fileEntries.OrderBy(f => metadata.Where(m => m.name == f.Replace($"{path}\\", "")).FirstOrDefault().index).ToList();
         }
+        else
+        {
+          fileEntries = fileEntries.OrderBy(x => x).ToList();
+        }
 
         fileCount = fileEntries.Count();        
         headerSize = 0x44 + (fileEntries.Count * 0x100) + 0x1BC;
@@ -297,7 +301,7 @@ namespace Steins_Gate_Creation_Files
         int index = 0;
 
         entries = new MPK2ENTRY[fileCount];
-        foreach (string files in fileEntries.OrderBy(x => x))
+        foreach (string files in fileEntries)
         {
           //file = files.Substring(slashPos + 1);
           file = files.Replace($"{path}\\", "");
